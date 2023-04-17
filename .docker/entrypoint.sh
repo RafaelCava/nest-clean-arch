@@ -2,4 +2,4 @@
 
 yarn install
 
-yarn start:dev 
+yarn start:dev --entryFile ./main/main.js
