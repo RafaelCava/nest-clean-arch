@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { SendEventService } from '../rabbitmq/send-event/send-event.service';
+import { SendEventService } from '../../infra/rabbitMQ/send-event/send-event.service';
 import { CreateUserRepository } from 'src/infra/mongodb/repositories/create-user-repository';
 
 @Injectable()
