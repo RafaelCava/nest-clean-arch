@@ -3,12 +3,12 @@ import { Module } from '@nestjs/common';
 import { databaseProviders, schemasProviders } from './mongodb/providers';
 import { CreateUserMongoRepository } from './mongodb/repositories/create-user-repository';
 import { LoadAvatarByUserIdMongoRepository } from './mongodb/repositories/load-avatar-by-user-id-mongo-repository';
-import { CreateAvatarRepository } from './mongodb/repositories/create-avatar-repository';
+import { CreateAvatarMongoRepository } from './mongodb/repositories/create-avatar-repository';
 import { TransformImageToBase64 } from './medias/transform-image-to-base64';
-import { LoadUserDataByIdService } from './http/load-user-data-by-id.service';
+import { LoadUserDataByIdHttp } from './http/load-user-data-by-id.service';
 import { HttpModule } from '@nestjs/axios';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { DeleteAvatarByUserIdRepository } from './mongodb/repositories/delete-avatar-by-user-id-repository';
+import { DeleteAvatarByUserIdMongoRepository } from './mongodb/repositories/delete-avatar-by-user-id-repository';
 import { RemoveMedia } from './medias/remove-media';
 
 @Module({
@@ -43,12 +43,20 @@ import { RemoveMedia } from './medias/remove-media';
       provide: 'LoadAvatarByUserIdRepository',
       useClass: LoadAvatarByUserIdMongoRepository,
     },
-    LoadAvatarByUserIdMongoRepository,
-    CreateAvatarRepository,
+    {
+      provide: 'CreateAvatarRepository',
+      useClass: CreateAvatarMongoRepository,
+    },
+    {
+      provide: 'DeleteAvatarByUserIdRepository',
+      useClass: DeleteAvatarByUserIdMongoRepository,
+    },
+    {
+      provide: 'LoadUserDataByIdRepository',
+      useClass: LoadUserDataByIdHttp,
+    },
     TransformImageToBase64,
-    LoadUserDataByIdService,
     SendEventService,
-    DeleteAvatarByUserIdRepository,
     RemoveMedia,
   ],
   exports: [
@@ -62,12 +70,20 @@ import { RemoveMedia } from './medias/remove-media';
       provide: 'LoadAvatarByUserIdRepository',
       useClass: LoadAvatarByUserIdMongoRepository,
     },
-    LoadAvatarByUserIdMongoRepository,
-    CreateAvatarRepository,
+    {
+      provide: 'CreateAvatarRepository',
+      useClass: CreateAvatarMongoRepository,
+    },
+    {
+      provide: 'DeleteAvatarByUserIdRepository',
+      useClass: DeleteAvatarByUserIdMongoRepository,
+    },
+    {
+      provide: 'LoadUserDataByIdRepository',
+      useClass: LoadUserDataByIdHttp,
+    },
     TransformImageToBase64,
-    LoadUserDataByIdService,
     SendEventService,
-    DeleteAvatarByUserIdRepository,
     RemoveMedia,
   ],
 })

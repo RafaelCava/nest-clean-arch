@@ -1,12 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { DeleteAvatarByUserIdRepository } from '../../infra/mongodb/repositories/delete-avatar-by-user-id-repository';
+import { DeleteAvatarByUserIdMongoRepository } from '../../infra/mongodb/repositories/delete-avatar-by-user-id-repository';
 import { RemoveMedia } from '../../infra/medias/remove-media';
 import { LoadAvatarByUserIdRepository } from '../../data/protocols';
 
 @Injectable()
 export class DeleteAvatarService {
   constructor(
-    private readonly deleteAvatarByUserIdRepository: DeleteAvatarByUserIdRepository,
+    private readonly deleteAvatarByUserIdRepository: DeleteAvatarByUserIdMongoRepository,
     @Inject('LoadAvatarByUserIdRepository')
     private readonly loadAvatarByUserIdRepository: LoadAvatarByUserIdRepository,
     private readonly removeMedia: RemoveMedia,

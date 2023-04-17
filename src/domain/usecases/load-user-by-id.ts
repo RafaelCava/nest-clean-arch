@@ -1,9 +1,15 @@
-import { User } from '../models/user';
-
 export interface LoadUserById {
   loadById: (userId: string) => Promise<LoadUserById.Result>;
 }
 
 export namespace LoadUserById {
-  export type Result = User;
+  export type Result = {
+    data: {
+      id: number;
+      email: string;
+      first_name: string;
+      last_name: string;
+      avatar: string;
+    };
+  };
 }

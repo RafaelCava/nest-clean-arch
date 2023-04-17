@@ -1,16 +1,20 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { LoadUserDataByIdService } from '../../infra/http/load-user-data-by-id.service';
-import { CreateAvatarRepository } from '../../infra/mongodb/repositories/create-avatar-repository';
 import { TransformImageToBase64 } from '../../infra/medias/transform-image-to-base64';
-import { LoadAvatarByUserId } from 'src/domain/usecases/load-avatar-by-user-id';
-import { LoadAvatarByUserIdRepository } from '../protocols';
+import { LoadAvatarByUserId } from '../../domain/usecases/load-avatar-by-user-id';
+import {
+  CreateAvatarRepository,
+  LoadAvatarByUserIdRepository,
+  LoadUserDataByIdRepository,
+} from '../protocols';
 
 @Injectable()
 export class DbLoadAvatarByUserId implements LoadAvatarByUserId {
   constructor(
     @Inject('LoadAvatarByUserIdRepository')
     private readonly loadAvatarByUserIdRepository: LoadAvatarByUserIdRepository,
-    private readonly loadUserDataByIdService: LoadUserDataByIdService,
+    @Inject('LoadUserDataByIdRepository')
+    private readonly loadUserDataByIdRepository: LoadUserDataByIdRepository,
+    @Inject('CreateAvatarRepository')
     private readonly createAvatarRepository: CreateAvatarRepository,
     private readonly transformImageToBase64: TransformImageToBase64,
   ) {}
@@ -21,7 +25,7 @@ export class DbLoadAvatarByUserId implements LoadAvatarByUserId {
         avatar: avatar.base64,
       };
     }
-    const userData = await this.loadUserDataByIdService.loadById(userId);
+    const userData = await this.loadUserDataByIdRepository.loadById(userId);
     const { imgBase64, hash } = await this.transformImageToBase64.transform(
       userData.data.avatar,
       userId,

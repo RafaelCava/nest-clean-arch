@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { Avatar } from '../../../domain/models/avatar';
-import { LoadAvatarByUserIdRepository } from 'src/data/protocols';
+import { LoadAvatarByUserIdRepository } from '../../../data/protocols';
 
 @Injectable()
 export class LoadAvatarByUserIdMongoRepository
