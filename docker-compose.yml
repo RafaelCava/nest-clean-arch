@@ -1,0 +1,22 @@
+version: '3.7'
+
+networks:
+  payever:
+    driver: bridge
+
+services:
+  payever-assessment:
+    build: 
+      context: .
+      dockerfile: ./.docker/dockerfiles/Dockerfile
+    entrypoint: sh ./.docker/entrypoint.sh
+    restart: always
+    container_name: payever-assessment
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/usr/payever-assessment/app
+    networks:
+      - payever
+    extra_hosts:
+      - host.docker.internal:host-gateway
