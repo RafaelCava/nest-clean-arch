@@ -1,15 +1,14 @@
 import { SendEventRabbitMq } from './rabbitMQ/events/send-event.service';
 import { Module } from '@nestjs/common';
-import { databaseProviders, schemasProviders } from './mongodb/providers';
-import { CreateUserMongoRepository } from './mongodb/repositories/create-user-repository';
-import { LoadAvatarByUserIdMongoRepository } from './mongodb/repositories/load-avatar-by-user-id-mongo-repository';
-import { CreateAvatarMongoRepository } from './mongodb/repositories/create-avatar-repository';
-import { MediaTransformImageToBase64 } from './medias/transform-image-to-base64';
+import {
+  databaseProviders,
+  schemasProviders,
+  repositoriesProviders,
+} from './mongodb/providers';
 import { LoadUserDataByIdHttp } from './http/load-user-data-by-id.service';
 import { HttpModule } from '@nestjs/axios';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { DeleteAvatarByUserIdMongoRepository } from './mongodb/repositories/delete-avatar-by-user-id-repository';
-import { RemoveMediaFileSystem } from './medias/remove-media';
+import { mediasProviders } from './medias/medias.provider';
 
 @Module({
   imports: [
@@ -35,33 +34,11 @@ import { RemoveMediaFileSystem } from './medias/remove-media';
   providers: [
     ...databaseProviders,
     ...schemasProviders,
-    {
-      provide: 'CreateUserRepository',
-      useClass: CreateUserMongoRepository,
-    },
-    {
-      provide: 'LoadAvatarByUserIdRepository',
-      useClass: LoadAvatarByUserIdMongoRepository,
-    },
-    {
-      provide: 'CreateAvatarRepository',
-      useClass: CreateAvatarMongoRepository,
-    },
-    {
-      provide: 'DeleteAvatarByUserIdRepository',
-      useClass: DeleteAvatarByUserIdMongoRepository,
-    },
+    ...repositoriesProviders,
+    ...mediasProviders,
     {
       provide: 'LoadUserDataByIdRepository',
       useClass: LoadUserDataByIdHttp,
-    },
-    {
-      provide: 'TransformImageToBase64',
-      useClass: MediaTransformImageToBase64,
-    },
-    {
-      provide: 'RemoveMedia',
-      useClass: RemoveMediaFileSystem,
     },
     {
       provide: 'SendEvent',
@@ -71,33 +48,11 @@ import { RemoveMediaFileSystem } from './medias/remove-media';
   exports: [
     ...databaseProviders,
     ...schemasProviders,
-    {
-      provide: 'CreateUserRepository',
-      useClass: CreateUserMongoRepository,
-    },
-    {
-      provide: 'LoadAvatarByUserIdRepository',
-      useClass: LoadAvatarByUserIdMongoRepository,
-    },
-    {
-      provide: 'CreateAvatarRepository',
-      useClass: CreateAvatarMongoRepository,
-    },
-    {
-      provide: 'DeleteAvatarByUserIdRepository',
-      useClass: DeleteAvatarByUserIdMongoRepository,
-    },
+    ...repositoriesProviders,
+    ...mediasProviders,
     {
       provide: 'LoadUserDataByIdRepository',
       useClass: LoadUserDataByIdHttp,
-    },
-    {
-      provide: 'TransformImageToBase64',
-      useClass: MediaTransformImageToBase64,
-    },
-    {
-      provide: 'RemoveMedia',
-      useClass: RemoveMediaFileSystem,
     },
     {
       provide: 'SendEvent',
