@@ -1,73 +1,92 @@
+<div align="center" id="top"> 
+  <!-- <img src="./.github/app.gif" alt="Payever Assessment" /> -->
+
+  &#xa0;
+
+  <!-- <a href="https://payeverassessment.netlify.app">Demo</a> -->
+</div>
+
+<h1 align="center">Payever Assessment</h1>
+
 <p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
+  <img alt="Github top language" src="https://img.shields.io/github/languages/top/RafaelCava/payever-assessment?color=56BEB8">
+
+  <img alt="Github language count" src="https://img.shields.io/github/languages/count/RafaelCava/payever-assessment?color=56BEB8">
+
+  <img alt="Repository size" src="https://img.shields.io/github/repo-size/RafaelCava/payever-assessment?color=56BEB8">
+
+  <img alt="License" src="https://img.shields.io/github/license/RafaelCava/payever-assessment?color=56BEB8">
+
+  <!-- <img alt="Github issues" src="https://img.shields.io/github/issues/RafaelCava/payever-assessment?color=56BEB8" /> -->
+
+  <!-- <img alt="Github forks" src="https://img.shields.io/github/forks/RafaelCava/payever-assessment?color=56BEB8" /> -->
+
+  <!-- <img alt="Github stars" src="https://img.shields.io/github/stars/RafaelCava/payever-assessment?color=56BEB8" /> -->
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+<!-- Status -->
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
+<!-- <h4 align="center"> 
+	🚧  Payever Assessment 🚀 Under construction...  🚧
+</h4> 
+
+<hr> -->
+
+<p align="center">
+  <a href="#dart-about">About</a> &#xa0; | &#xa0; 
+  <a href="#sparkles-features">Features</a> &#xa0; | &#xa0;
+  <a href="#rocket-technologies">Technologies</a> &#xa0; | &#xa0;
+  <a href="#white_check_mark-requirements">Requirements</a> &#xa0; | &#xa0;
+  <a href="#checkered_flag-starting">Starting</a> &#xa0; | &#xa0;
+  <a href="#memo-license">License</a> &#xa0; | &#xa0;
+  <a href="https://github.com/RafaelCava" target="_blank">Author</a>
 </p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+<br>
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## :dart: About ##
 
-## Installation
+Project created for Payever's technical test
+
+## :sparkles: Features ##
+
+:heavy_check_mark: create an user\
+:heavy_check_mark: show an user\
+:heavy_check_mark: show an avatar user
+
+## :rocket: Technologies ##
+
+The following tools were used in this project:
+
+- [Node.js](https://nodejs.org/en/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Docker](https://hub.docker.com/)
+- [NestJs](https://nestjs.com/)
+
+
+## :white_check_mark: Requirements ##
+
+Before starting :checkered_flag:, you need to have [Git](https://git-scm.com) and [Docker](https://hub.docker.com/) installed.
+
+## :checkered_flag: Starting ##
 
 ```bash
-$ yarn install
+# Clone this project
+$ git clone https://github.com/RafaelCava/payever-assessment
+
+# Access
+$ cd payever-assessment
+
+# Run the project
+$ docker-compose up -d
+# All the services are started
+
+# The server will initialize in the <http://localhost:3000>
 ```
 
-## Running the app
 
-```bash
-# development
-$ yarn run start
+Made with :heart: by <a href="https://github.com/RafaelCava" target="_blank">Rafael Cavalcante</a>
 
-# watch mode
-$ yarn run start:dev
+&#xa0;
 
-# production mode
-$ yarn run start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ yarn run test
-
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+<a href="#top">Back to top</a>

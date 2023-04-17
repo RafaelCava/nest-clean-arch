@@ -5,7 +5,7 @@ import {
   DbLoadAvatarByUserId,
   DbLoadUserById,
 } from './usecases';
-import { InfraModule } from 'src/infra/infra.module';
+import { InfraModule } from '../infra/infra.module';
 
 @Module({
   imports: [InfraModule],
