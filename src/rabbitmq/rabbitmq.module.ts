@@ -21,4 +21,4 @@ import { SendEventService } from './send-event/send-event.service';
   providers: [SendEventService],
   exports: [SendEventService],
 })
-export class RabbitmqModule {}
+export class RabbitMqModule {}

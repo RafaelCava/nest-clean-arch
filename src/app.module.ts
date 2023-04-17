@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { CreateUserModule } from './create-user/create-user.module';
-import { RabbitmqModule } from './rabbitmq/rabbitmq.module';
+import { RabbitMqModule } from './rabbitmq/rabbitmq.module';
 import { InfraModule } from './infra/infra.module';
+import { HttpModule } from './http/http.module';
 
 @Module({
-  imports: [CreateUserModule, RabbitmqModule, InfraModule],
+  imports: [CreateUserModule, RabbitMqModule, InfraModule, HttpModule],
 })
 export class AppModule {}
