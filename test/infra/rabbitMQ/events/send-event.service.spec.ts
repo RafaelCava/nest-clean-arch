@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { SendEventService } from './send-event.service';
+import { SendEventService } from '../../../../src/infra/rabbitMQ/events/send-event.service';
 
 describe('SendEventService', () => {
   let service: SendEventService;

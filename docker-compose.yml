@@ -12,6 +12,15 @@ services:
     entrypoint: sh ./.docker/entrypoint.sh
     restart: always
     container_name: payever-assessment
+    environment:
+      NODE_ENV: development
+      MONGO_URI: mongodb://root:root@host.docker.internal:27017/payever-assessment?authSource=admin
+      RABBITMQ_URI: amqp://user:password@host.docker.internal:5672
+      BASE_API: https://reqres.in/api
+      PORT: 3000
+    depends_on:
+      - mongo
+      - rabbitmq
     ports:
       - 3000:3000
     volumes:

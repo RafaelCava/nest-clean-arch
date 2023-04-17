@@ -1,8 +1,8 @@
-import { SendEventService } from './rabbitMQ/send-event/send-event.service';
+import { SendEventService } from './rabbitMQ/events/send-event.service';
 import { Module } from '@nestjs/common';
 import { databaseProviders, schemasProviders } from './mongodb/providers';
-import { CreateUserRepository } from './mongodb/repositories/create-user-repository';
-import { LoadAvatarByUserIdRepository } from './mongodb/repositories/load-avatar-by-user-id-repository';
+import { CreateUserMongoRepository } from './mongodb/repositories/create-user-repository';
+import { LoadAvatarByUserIdMongoRepository } from './mongodb/repositories/load-avatar-by-user-id-mongo-repository';
 import { CreateAvatarRepository } from './mongodb/repositories/create-avatar-repository';
 import { TransformImageToBase64 } from './medias/transform-image-to-base64';
 import { LoadUserDataByIdService } from './http/load-user-data-by-id.service';
@@ -14,7 +14,7 @@ import { RemoveMedia } from './medias/remove-media';
 @Module({
   imports: [
     HttpModule.register({
-      baseURL: 'https://reqres.in/api',
+      baseURL: process.env.BASE_API,
       timeout: 5000,
       maxRedirects: 5,
     }),
@@ -23,7 +23,7 @@ import { RemoveMedia } from './medias/remove-media';
         name: 'RABBITMQ_SERVICE',
         transport: Transport.RMQ,
         options: {
-          urls: ['amqp://user:password@host.docker.internal:5672'],
+          urls: [process.env.RABBITMQ_URI],
           queue: 'main_queue',
           queueOptions: {
             durable: false,
@@ -35,8 +35,15 @@ import { RemoveMedia } from './medias/remove-media';
   providers: [
     ...databaseProviders,
     ...schemasProviders,
-    CreateUserRepository,
-    LoadAvatarByUserIdRepository,
+    {
+      provide: 'CreateUserRepository',
+      useClass: CreateUserMongoRepository,
+    },
+    {
+      provide: 'LoadAvatarByUserIdRepository',
+      useClass: LoadAvatarByUserIdMongoRepository,
+    },
+    LoadAvatarByUserIdMongoRepository,
     CreateAvatarRepository,
     TransformImageToBase64,
     LoadUserDataByIdService,
@@ -47,8 +54,15 @@ import { RemoveMedia } from './medias/remove-media';
   exports: [
     ...databaseProviders,
     ...schemasProviders,
-    CreateUserRepository,
-    LoadAvatarByUserIdRepository,
+    {
+      provide: 'CreateUserRepository',
+      useClass: CreateUserMongoRepository,
+    },
+    {
+      provide: 'LoadAvatarByUserIdRepository',
+      useClass: LoadAvatarByUserIdMongoRepository,
+    },
+    LoadAvatarByUserIdMongoRepository,
     CreateAvatarRepository,
     TransformImageToBase64,
     LoadUserDataByIdService,

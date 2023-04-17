@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import {
-  CreateUserService,
-  DeleteAvatarService,
-  LoadAvatarByUserIdService,
-  LoadUserByIdService,
+  DbCreateUser,
+  DbDeleteAvatar,
+  DbLoadAvatarByUserId,
+  DbLoadUserById,
 } from './usecases';
 import { InfraModule } from 'src/infra/infra.module';
 
@@ -12,20 +12,38 @@ import { InfraModule } from 'src/infra/infra.module';
   providers: [
     {
       provide: 'CreateUser',
-      useClass: CreateUserService,
+      useClass: DbCreateUser,
     },
-    DeleteAvatarService,
-    LoadAvatarByUserIdService,
-    LoadUserByIdService,
+    {
+      provide: 'DeleteAvatar',
+      useClass: DbDeleteAvatar,
+    },
+    {
+      provide: 'LoadAvatarByUserId',
+      useClass: DbLoadAvatarByUserId,
+    },
+    {
+      provide: 'LoadUserById',
+      useClass: DbLoadUserById,
+    },
   ],
   exports: [
     {
       provide: 'CreateUser',
-      useClass: CreateUserService,
+      useClass: DbCreateUser,
     },
-    DeleteAvatarService,
-    LoadAvatarByUserIdService,
-    LoadUserByIdService,
+    {
+      provide: 'DeleteAvatar',
+      useClass: DbDeleteAvatar,
+    },
+    {
+      provide: 'LoadAvatarByUserId',
+      useClass: DbLoadAvatarByUserId,
+    },
+    {
+      provide: 'LoadUserById',
+      useClass: DbLoadUserById,
+    },
   ],
 })
 export class DataModule {}

@@ -1,5 +1,5 @@
 import { Body, Controller, Inject, Post, Response } from '@nestjs/common';
-import { CreateUser } from 'src/domain/usecases';
+import { CreateUser } from '../../domain/usecases';
 
 @Controller('users')
 export class CreateUserController {

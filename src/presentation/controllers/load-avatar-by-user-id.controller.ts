@@ -1,17 +1,16 @@
-import { Controller, Get, Param, Response } from '@nestjs/common';
-import { LoadAvatarByUserIdService } from '../../data/usecases';
+import { Controller, Get, Inject, Param, Response } from '@nestjs/common';
+import { LoadAvatarByUserId } from '../../domain/usecases/load-avatar-by-user-id';
 
 @Controller('user')
 export class LoadAvatarByUserIdController {
   constructor(
-    private readonly loadAvatarByUserIdService: LoadAvatarByUserIdService,
+    @Inject('LoadAvatarByUserId')
+    private readonly loadAvatarByUserId: LoadAvatarByUserId,
   ) {}
   @Get(':id/avatar')
-  async loadAvatarByUserId(@Param('id') id: string, @Response() res: any) {
+  async load(@Param('id') id: string, @Response() res: any) {
     try {
-      const avatar = await this.loadAvatarByUserIdService.loadAvatarByUserId(
-        id,
-      );
+      const avatar = await this.loadAvatarByUserId.loadAvatarByUserId(id);
       return res.status(200).json(avatar);
     } catch (error) {
       return res.status(400).json({ error: error.message });
