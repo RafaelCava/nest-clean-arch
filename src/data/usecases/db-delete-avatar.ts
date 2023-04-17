@@ -1,9 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { RemoveMedia } from '../../infra/medias/remove-media';
 import { DeleteAvatar } from '../../domain/usecases';
 import {
   DeleteAvatarByUserIdRepository,
   LoadAvatarByUserIdRepository,
+  RemoveMedia,
 } from '../protocols';
 
 @Injectable()
@@ -13,6 +13,7 @@ export class DbDeleteAvatar implements DeleteAvatar {
     private readonly deleteAvatarByUserIdRepository: DeleteAvatarByUserIdRepository,
     @Inject('LoadAvatarByUserIdRepository')
     private readonly loadAvatarByUserIdRepository: LoadAvatarByUserIdRepository,
+    @Inject('RemoveMedia')
     private readonly removeMedia: RemoveMedia,
   ) {}
   async deleteAvatar(userId: string): Promise<DeleteAvatar.Result> {

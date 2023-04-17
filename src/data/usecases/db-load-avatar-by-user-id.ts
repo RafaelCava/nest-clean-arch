@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { TransformImageToBase64 } from '../../infra/medias/transform-image-to-base64';
 import { LoadAvatarByUserId } from '../../domain/usecases/load-avatar-by-user-id';
 import {
   CreateAvatarRepository,
   LoadAvatarByUserIdRepository,
   LoadUserDataByIdRepository,
+  TransformImageToBase64,
 } from '../protocols';
 
 @Injectable()
@@ -16,6 +16,7 @@ export class DbLoadAvatarByUserId implements LoadAvatarByUserId {
     private readonly loadUserDataByIdRepository: LoadUserDataByIdRepository,
     @Inject('CreateAvatarRepository')
     private readonly createAvatarRepository: CreateAvatarRepository,
+    @Inject('TransformImageToBase64')
     private readonly transformImageToBase64: TransformImageToBase64,
   ) {}
   async loadAvatarByUserId(userId: string): Promise<LoadAvatarByUserId.Result> {

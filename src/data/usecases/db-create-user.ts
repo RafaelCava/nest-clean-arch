@@ -1,18 +1,18 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { SendEventService } from '../../infra/rabbitMQ/events/send-event.service';
-import { CreateUserRepository } from '../protocols';
-import { CreateUser } from 'src/domain/usecases';
+import { CreateUserRepository, SendEvent } from '../protocols';
+import { CreateUser } from '../../domain/usecases';
 
 @Injectable()
 export class DbCreateUser implements CreateUser {
   constructor(
-    private readonly sendEventService: SendEventService,
+    @Inject('SendEvent')
+    private readonly sendEvent: SendEvent,
     @Inject('CreateUserRepository')
     private readonly createUserRepository: CreateUserRepository,
   ) {}
   async create(body: CreateUser.Params): Promise<CreateUser.Result> {
     const user = await this.createUserRepository.create(body);
-    await this.sendEventService.sendEvent(body);
+    await this.sendEvent.sendEvent(body);
     return { user };
   }
 }

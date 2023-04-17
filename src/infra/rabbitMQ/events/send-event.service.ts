@@ -1,8 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy, RmqRecordBuilder } from '@nestjs/microservices';
+import { SendEvent } from 'src/data/protocols';
 
 @Injectable()
-export class SendEventService {
+export class SendEventRabbitMq implements SendEvent {
   constructor(
     @Inject('RABBITMQ_SERVICE') private readonly client: ClientProxy,
   ) {}

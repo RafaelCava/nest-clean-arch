@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { DeleteAvatarByUserIdMongoRepository } from '../../infra/mongodb/repositories/delete-avatar-by-user-id-repository';
-import { RemoveMedia } from '../../infra/medias/remove-media';
+import { RemoveMediaFileSystem } from '../../infra/medias/remove-media';
 import { LoadAvatarByUserIdRepository } from '../../data/protocols';
 
 @Injectable()
@@ -9,7 +9,7 @@ export class DeleteAvatarService {
     private readonly deleteAvatarByUserIdRepository: DeleteAvatarByUserIdMongoRepository,
     @Inject('LoadAvatarByUserIdRepository')
     private readonly loadAvatarByUserIdRepository: LoadAvatarByUserIdRepository,
-    private readonly removeMedia: RemoveMedia,
+    private readonly removeMedia: RemoveMediaFileSystem,
   ) {}
   async deleteAvatar(userId: string) {
     const avatar = await this.loadAvatarByUserIdRepository.loadByUserId(userId);

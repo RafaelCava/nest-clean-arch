@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { SendEventService } from '../../../../src/infra/rabbitMQ/events/send-event.service';
+import { SendEventRabbitMq } from '../../../../src/infra/rabbitMQ/events/send-event.service';
 
 describe('SendEventService', () => {
-  let service: SendEventService;
+  let service: SendEventRabbitMq;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [SendEventService],
+      providers: [SendEventRabbitMq],
     }).compile();
 
-    service = module.get<SendEventService>(SendEventService);
+    service = module.get<SendEventRabbitMq>(SendEventRabbitMq);
   });
 
   it('should be defined', () => {

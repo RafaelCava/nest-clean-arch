@@ -1,15 +1,15 @@
-import { SendEventService } from './rabbitMQ/events/send-event.service';
+import { SendEventRabbitMq } from './rabbitMQ/events/send-event.service';
 import { Module } from '@nestjs/common';
 import { databaseProviders, schemasProviders } from './mongodb/providers';
 import { CreateUserMongoRepository } from './mongodb/repositories/create-user-repository';
 import { LoadAvatarByUserIdMongoRepository } from './mongodb/repositories/load-avatar-by-user-id-mongo-repository';
 import { CreateAvatarMongoRepository } from './mongodb/repositories/create-avatar-repository';
-import { TransformImageToBase64 } from './medias/transform-image-to-base64';
+import { MediaTransformImageToBase64 } from './medias/transform-image-to-base64';
 import { LoadUserDataByIdHttp } from './http/load-user-data-by-id.service';
 import { HttpModule } from '@nestjs/axios';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { DeleteAvatarByUserIdMongoRepository } from './mongodb/repositories/delete-avatar-by-user-id-repository';
-import { RemoveMedia } from './medias/remove-media';
+import { RemoveMediaFileSystem } from './medias/remove-media';
 
 @Module({
   imports: [
@@ -55,9 +55,18 @@ import { RemoveMedia } from './medias/remove-media';
       provide: 'LoadUserDataByIdRepository',
       useClass: LoadUserDataByIdHttp,
     },
-    TransformImageToBase64,
-    SendEventService,
-    RemoveMedia,
+    {
+      provide: 'TransformImageToBase64',
+      useClass: MediaTransformImageToBase64,
+    },
+    {
+      provide: 'RemoveMedia',
+      useClass: RemoveMediaFileSystem,
+    },
+    {
+      provide: 'SendEvent',
+      useClass: SendEventRabbitMq,
+    },
   ],
   exports: [
     ...databaseProviders,
@@ -82,9 +91,18 @@ import { RemoveMedia } from './medias/remove-media';
       provide: 'LoadUserDataByIdRepository',
       useClass: LoadUserDataByIdHttp,
     },
-    TransformImageToBase64,
-    SendEventService,
-    RemoveMedia,
+    {
+      provide: 'TransformImageToBase64',
+      useClass: MediaTransformImageToBase64,
+    },
+    {
+      provide: 'RemoveMedia',
+      useClass: RemoveMediaFileSystem,
+    },
+    {
+      provide: 'SendEvent',
+      useClass: SendEventRabbitMq,
+    },
   ],
 })
 export class InfraModule {}
