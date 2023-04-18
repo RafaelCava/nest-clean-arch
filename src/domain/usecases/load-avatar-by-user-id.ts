@@ -1,5 +1,5 @@
 export interface LoadAvatarByUserId {
-  loadAvatarByUserId: (userId: string) => Promise<LoadAvatarByUserId.Result>;
+  load: (userId: string) => Promise<LoadAvatarByUserId.Result>;
 }
 
 export namespace LoadAvatarByUserId {

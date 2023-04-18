@@ -1,4 +1,11 @@
-import { Controller, Get, Inject, Param, Response } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpException,
+  HttpStatus,
+  Inject,
+  Param,
+} from '@nestjs/common';
 import { LoadAvatarByUserId } from '../../domain/usecases/load-avatar-by-user-id';
 
 @Controller('user')
@@ -8,12 +15,12 @@ export class LoadAvatarByUserIdController {
     private readonly loadAvatarByUserId: LoadAvatarByUserId,
   ) {}
   @Get(':id/avatar')
-  async load(@Param('id') id: string, @Response() res: any) {
+  async load(@Param('id') id: string) {
     try {
-      const avatar = await this.loadAvatarByUserId.loadAvatarByUserId(id);
-      return res.status(200).json(avatar);
+      const avatar = await this.loadAvatarByUserId.load(id);
+      return avatar;
     } catch (error) {
-      return res.status(400).json({ error: error.message });
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }
 }

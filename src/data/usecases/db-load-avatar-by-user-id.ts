@@ -19,7 +19,7 @@ export class DbLoadAvatarByUserId implements LoadAvatarByUserId {
     @Inject('TransformImageToBase64')
     private readonly transformImageToBase64: TransformImageToBase64,
   ) {}
-  async loadAvatarByUserId(userId: string): Promise<LoadAvatarByUserId.Result> {
+  async load(userId: string): Promise<LoadAvatarByUserId.Result> {
     const avatar = await this.loadAvatarByUserIdRepository.loadByUserId(userId);
     if (avatar) {
       return {

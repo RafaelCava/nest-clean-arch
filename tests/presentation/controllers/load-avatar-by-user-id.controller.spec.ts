@@ -28,4 +28,12 @@ describe('LoadAvatarByUserIdController', () => {
     expect(controller).toBeDefined();
     expect(loadAvatarByUserIdSpy).toBeDefined();
   });
+
+  it('should call LoadAvatarByUserId with correct value', async () => {
+    const loadSpy = jest.spyOn(loadAvatarByUserIdSpy, 'load');
+    const userId = 'any_user_id';
+    await controller.load(userId);
+    expect(loadSpy).toHaveBeenCalledTimes(1);
+    expect(loadAvatarByUserIdSpy.userId).toBe(userId);
+  });
 });
