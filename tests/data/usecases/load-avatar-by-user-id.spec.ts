@@ -55,4 +55,82 @@ describe('LoadAvatarByUserId', () => {
     expect(transformImageToBase64Spy).toBeDefined();
     expect(createAvatarRepositorySpy).toBeDefined();
   });
+
+  it('should call LoadAvatarByUserIdRepository with correct values', async () => {
+    const loadByUserIdSpy = jest.spyOn(loadAvatarByUserIdRepositorySpy, 'loadByUserId')
+    const userId = 'any_id'
+    await provider.load(userId)
+    expect(loadAvatarByUserIdRepositorySpy.userId).toBe(userId)
+    expect(loadByUserIdSpy).toHaveBeenCalledTimes(1)
+  })
+
+  it('should throw if LoadAvatarByUserIdRepository throws', async () => {
+    jest.spyOn(loadAvatarByUserIdRepositorySpy, 'loadByUserId').mockRejectedValueOnce(new Error())
+    const promise = provider.load('any_id')
+    await expect(promise).rejects.toThrow()
+  })
+  
+  it('should call LoadUserDataByIdRepository with correct values', async () => {
+    jest.spyOn(loadAvatarByUserIdRepositorySpy, 'loadByUserId').mockResolvedValueOnce(Promise.resolve(null))
+    const loadByIdSpy = jest.spyOn(loadUserDataByIdRepositorySpy, 'loadById')
+    const userId = 'any_id'
+    await provider.load(userId)
+    expect(loadUserDataByIdRepositorySpy.id).toBe(userId)
+    expect(loadByIdSpy).toHaveBeenCalledTimes(1)
+  })
+
+  it('should throw if LoadUserDataByIdRepository throws', async () => {
+    jest.spyOn(loadAvatarByUserIdRepositorySpy, 'loadByUserId').mockResolvedValueOnce(Promise.resolve(null))
+    jest.spyOn(loadUserDataByIdRepositorySpy, 'loadById').mockRejectedValueOnce(new Error())
+    const promise = provider.load('any_id')
+    await expect(promise).rejects.toThrow()
+  })
+
+  it('should call TransformImageToBase64 with correct values', async () => {
+    jest.spyOn(loadAvatarByUserIdRepositorySpy, 'loadByUserId').mockResolvedValueOnce(Promise.resolve(null))
+    const transformSpy = jest.spyOn(transformImageToBase64Spy, 'transform')
+    const userId = 'any_id'
+    await provider.load(userId)
+    expect(transformImageToBase64Spy.url).toBe('any_avatar')
+    expect(transformImageToBase64Spy.hasher).toBe(userId)
+    expect(transformSpy).toHaveBeenCalledTimes(1)
+  })
+
+  it('should throw if TransformImageToBase64 throws', async () => {
+    jest.spyOn(loadAvatarByUserIdRepositorySpy, 'loadByUserId').mockResolvedValueOnce(Promise.resolve(null))
+    jest.spyOn(transformImageToBase64Spy, 'transform').mockRejectedValueOnce(new Error())
+    const promise = provider.load('any_id')
+    await expect(promise).rejects.toThrow()
+  })
+
+  it('should call CreateAvatarRepository with correct values', async () => {
+    jest.spyOn(loadAvatarByUserIdRepositorySpy, 'loadByUserId').mockResolvedValueOnce(Promise.resolve(null))
+    const createSpy = jest.spyOn(createAvatarRepositorySpy, 'create')
+    const userId = 'any_id'
+    await provider.load(userId)
+    expect(createAvatarRepositorySpy.avatar).toEqual({
+      base64: 'any_base64',
+      hash: 'any_hash',
+      user: userId,
+    })
+    expect(createSpy).toHaveBeenCalledTimes(1)
+  })
+
+  it('should throw if CreateAvatarRepository throws', async () => {
+    jest.spyOn(loadAvatarByUserIdRepositorySpy, 'loadByUserId').mockResolvedValueOnce(Promise.resolve(null))
+    jest.spyOn(createAvatarRepositorySpy, 'create').mockRejectedValueOnce(new Error())
+    const promise = provider.load('any_id')
+    await expect(promise).rejects.toThrow()
+  })
+
+  it('should base64 if LoadAvatarByUserIdRepository returns an avatar', async () => {
+    const base64 = await provider.load('any_id')
+    expect(base64.avatar).toBe('any_base64')
+  })
+
+  it('should base64 if LoadAvatarByUserIdRepository returns null', async () => {
+    jest.spyOn(loadAvatarByUserIdRepositorySpy, 'loadByUserId').mockResolvedValueOnce(Promise.resolve(null))
+    const base64 = await provider.load('any_id')
+    expect(base64.avatar).toBe('any_base64')
+  })
 });
