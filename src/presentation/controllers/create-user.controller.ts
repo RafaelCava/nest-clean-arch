@@ -1,4 +1,11 @@
-import { Body, Controller, Inject, Post, Response } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpException,
+  HttpStatus,
+  Inject,
+  Post,
+} from '@nestjs/common';
 import { CreateUser } from '../../domain/usecases';
 
 @Controller('users')
@@ -9,12 +16,12 @@ export class CreateUserController {
   ) {}
 
   @Post()
-  async create(@Body() body: any, @Response() res: any) {
+  async create(@Body() body: any) {
     try {
       const user = await this.createUser.create(body);
-      return res.status(201).json(user);
+      return user;
     } catch (error) {
-      return res.status(400).json({ error: error.message });
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }
 }

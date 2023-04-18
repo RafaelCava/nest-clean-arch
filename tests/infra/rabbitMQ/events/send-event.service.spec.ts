@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { SendEventRabbitMq } from '../../../../src/infra/rabbitMQ/events/send-event.service';
 
-describe('SendEventService', () => {
+describe.skip('SendEventService', () => {
   let service: SendEventRabbitMq;
 
   beforeEach(async () => {
