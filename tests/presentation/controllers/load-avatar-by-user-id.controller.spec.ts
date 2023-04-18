@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { LoadAvatarByUserIdController } from '../../../src/presentation/controllers/load-avatar-by-user-id.controller';
 import { LoadAvatarByUserIdSpy } from '../mocks';
+import { throwError, throwException } from '../../domain/mocks';
 
 describe('LoadAvatarByUserIdController', () => {
   let controller: LoadAvatarByUserIdController;
@@ -35,5 +36,13 @@ describe('LoadAvatarByUserIdController', () => {
     await controller.load(userId);
     expect(loadSpy).toHaveBeenCalledTimes(1);
     expect(loadAvatarByUserIdSpy.userId).toBe(userId);
+  });
+
+  it('should throws if LoadAvatarByUserId throw', async () => {
+    jest
+      .spyOn(loadAvatarByUserIdSpy, 'load')
+      .mockImplementationOnce(throwError);
+    const promise = controller.load('any_user_id');
+    await expect(promise).rejects.toThrow(throwException());
   });
 });
