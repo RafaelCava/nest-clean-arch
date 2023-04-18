@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { LoadAvatarByUserIdController } from '../../../src/presentation/controllers/load-avatar-by-user-id.controller';
 import { LoadAvatarByUserIdSpy } from '../mocks';
-import { throwError, throwException } from '../../domain/mocks';
+import { mockLoadAvatar, throwError, throwException } from '../../domain/mocks';
 
 describe('LoadAvatarByUserIdController', () => {
   let controller: LoadAvatarByUserIdController;
@@ -44,5 +44,11 @@ describe('LoadAvatarByUserIdController', () => {
       .mockImplementationOnce(throwError);
     const promise = controller.load('any_user_id');
     await expect(promise).rejects.toThrow(throwException());
+  });
+
+  it('should avatar on succeeds', async () => {
+    const userId = 'any_user_id';
+    const result = await controller.load(userId);
+    expect(result).toEqual(mockLoadAvatar());
   });
 });
