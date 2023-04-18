@@ -1,7 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { LoadUserByIdController } from '../../../src/presentation/controllers/load-user-by-id.controller';
 import { LoadUserByIdSpy } from '../mocks';
-import { throwError, throwException } from '../../domain/mocks';
+import {
+  mockExternalUser,
+  throwError,
+  throwException,
+} from '../../domain/mocks';
 
 describe('LoadUserByIdController', () => {
   let sut: LoadUserByIdController;
@@ -39,5 +43,10 @@ describe('LoadUserByIdController', () => {
     jest.spyOn(loadUserByIdSpy, 'loadById').mockImplementationOnce(throwError);
     const promise = sut.loadById('any_id');
     await expect(promise).rejects.toThrow(throwException());
+  });
+
+  it('should return a data user on succeeds', async () => {
+    const result = await sut.loadById('any_id');
+    expect(result).toEqual(mockExternalUser());
   });
 });

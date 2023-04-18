@@ -19,7 +19,7 @@ export class LoadUserByIdController {
   async loadById(@Param('id') id: string) {
     try {
       const user = await this.loadUserById.loadById(id);
-      return { user };
+      return user;
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
