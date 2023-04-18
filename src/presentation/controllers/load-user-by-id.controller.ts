@@ -1,4 +1,11 @@
-import { Controller, Get, Inject, Param, Response } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpException,
+  HttpStatus,
+  Inject,
+  Param,
+} from '@nestjs/common';
 import { LoadUserById } from 'src/domain/usecases/load-user-by-id';
 
 @Controller('user')
@@ -9,12 +16,12 @@ export class LoadUserByIdController {
   ) {}
 
   @Get(':id')
-  async loadById(@Param('id') id: string, @Response() res: any) {
+  async loadById(@Param('id') id: string) {
     try {
       const user = await this.loadUserById.loadById(id);
-      return res.status(200).json({ user });
+      return { user };
     } catch (error) {
-      return res.status(400).json({ error: error.message });
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }
 }
