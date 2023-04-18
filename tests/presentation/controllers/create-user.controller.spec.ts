@@ -5,8 +5,6 @@ import {
 } from './../../domain/mocks';
 import { Test, TestingModule } from '@nestjs/testing';
 import { CreateUserController } from '../../../src/presentation/controllers/create-user.controller';
-import { DbCreateUser } from '../../../src/data/usecases';
-import { InfraModule } from '../../../src/infra/infra.module';
 import { CreateUserSpy } from '../mocks';
 import { HttpException, HttpStatus } from '@nestjs/common';
 
@@ -22,9 +20,7 @@ describe('CreateUserController', () => {
           provide: 'CreateUser',
           useClass: CreateUserSpy,
         },
-        DbCreateUser,
       ],
-      imports: [InfraModule],
     }).compile();
 
     sut = module.get<CreateUserController>(CreateUserController);

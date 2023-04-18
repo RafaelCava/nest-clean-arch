@@ -1,4 +1,11 @@
-import { Controller, Delete, Inject, Param, Response } from '@nestjs/common';
+import {
+  Controller,
+  Delete,
+  HttpException,
+  HttpStatus,
+  Inject,
+  Param,
+} from '@nestjs/common';
 import { DeleteAvatar } from 'src/domain/usecases/delete-avatar';
 
 @Controller('user')
@@ -8,15 +15,15 @@ export class DeleteAvatarController {
     private readonly deleteAvatar: DeleteAvatar,
   ) {}
   @Delete(':id/avatar')
-  async delete(@Param('id') id: string, @Response() res: any) {
+  async delete(@Param('id') id: string) {
     try {
       const { message, error } = await this.deleteAvatar.deleteAvatar(id);
       if (error) {
-        return res.status(400).json({ message });
+        throw new HttpException(message, HttpStatus.BAD_REQUEST);
       }
-      return res.status(200).json({ message });
+      return { message };
     } catch (error) {
-      return res.status(400).json({ error: error.message });
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }
 }
