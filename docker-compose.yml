@@ -6,10 +6,11 @@ networks:
 
 services:
   payever-assessment:
-    build: 
-      context: .
-      dockerfile: ./.docker/dockerfiles/Dockerfile
-    entrypoint: sh ./.docker/entrypoint.sh
+    # build: 
+    #   context: .
+    #   dockerfile: ./.docker/dockerfiles/Dockerfile
+    image: rafaelcaval1/payever-assessment:latest
+    # entrypoint: sh ./.docker/entrypoint.sh
     restart: always
     container_name: payever-assessment
     environment:
@@ -23,8 +24,8 @@ services:
       - rabbitmq
     ports:
       - 3000:3000
-    volumes:
-      - .:/usr/payever-assessment/app
+    # volumes:
+    #   - .:/usr/payever-assessment/app
     networks:
       - payever
     extra_hosts:
