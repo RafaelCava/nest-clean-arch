@@ -1,2 +1,5 @@
 export * from './mock-create-user-repository'
+export * from './mock-delete-avatar-by-user-id-repository'
+export * from './mock-load-avatar-by-user-id-repository'
 export * from './mock-send-event'
+export * from './mock-remove-media'
