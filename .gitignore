@@ -37,3 +37,4 @@ lerna-debug.log*
 
 data
 !src/data
+!tests/data
