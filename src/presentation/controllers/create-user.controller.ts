@@ -16,7 +16,7 @@ export class CreateUserController {
   ) {}
 
   @Post()
-  async create(@Body() body: any) {
+  async create(@Body() body: CreateUser.Params) {
     try {
       const user = await this.createUser.create(body);
       return user;

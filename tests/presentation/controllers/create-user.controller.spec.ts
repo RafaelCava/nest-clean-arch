@@ -1,12 +1,14 @@
 import {
   mockCreateUserParams,
   mockCreateUserResult,
+  throwError,
 } from './../../domain/mocks';
 import { Test, TestingModule } from '@nestjs/testing';
 import { CreateUserController } from '../../../src/presentation/controllers/create-user.controller';
 import { DbCreateUser } from '../../../src/data/usecases';
 import { InfraModule } from '../../../src/infra/infra.module';
 import { CreateUserSpy } from '../mocks';
+import { HttpException, HttpStatus } from '@nestjs/common';
 
 describe('CreateUserController', () => {
   let sut: CreateUserController;
@@ -35,17 +37,23 @@ describe('CreateUserController', () => {
   });
 
   it('should return a user on succeeds', async () => {
-    const params = mockCreateUserParams();
-    const result = await sut.create(params);
+    const result = await sut.create(mockCreateUserParams());
     expect(result).toEqual(mockCreateUserResult());
     expect(result.user.avatar).toEqual(mockCreateUserResult().user.avatar);
   });
 
   it('should call CreateUser with correct params', async () => {
     const createSpy = jest.spyOn(createUserSpy, 'create');
-    const params = mockCreateUserParams();
-    await sut.create(params);
+    await sut.create(mockCreateUserParams());
     expect(createSpy).toHaveBeenCalledTimes(1);
     expect(createUserSpy.body).toEqual(mockCreateUserParams());
+  });
+
+  it('should throws HttpExpception if CreateUser throws', async () => {
+    jest.spyOn(createUserSpy, 'create').mockImplementationOnce(throwError);
+    const promise = sut.create(mockCreateUserParams());
+    await expect(promise).rejects.toThrow(
+      new HttpException('error', HttpStatus.BAD_REQUEST),
+    );
   });
 });
