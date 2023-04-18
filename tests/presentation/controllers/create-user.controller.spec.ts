@@ -2,11 +2,11 @@ import {
   mockCreateUserParams,
   mockCreateUserResult,
   throwError,
+  throwException,
 } from './../../domain/mocks';
 import { Test, TestingModule } from '@nestjs/testing';
 import { CreateUserController } from '../../../src/presentation/controllers/create-user.controller';
 import { CreateUserSpy } from '../mocks';
-import { HttpException, HttpStatus } from '@nestjs/common';
 
 describe('CreateUserController', () => {
   let sut: CreateUserController;
@@ -48,8 +48,6 @@ describe('CreateUserController', () => {
   it('should throws HttpExpception if CreateUser throws', async () => {
     jest.spyOn(createUserSpy, 'create').mockImplementationOnce(throwError);
     const promise = sut.create(mockCreateUserParams());
-    await expect(promise).rejects.toThrow(
-      new HttpException('error', HttpStatus.BAD_REQUEST),
-    );
+    await expect(promise).rejects.toThrow(throwException());
   });
 });

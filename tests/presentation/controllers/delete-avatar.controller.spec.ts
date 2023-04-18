@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { DeleteAvatarController } from '../../../src/presentation/controllers/delete-avatar.controller';
 import { DeleteAvatarSpy } from '../mocks';
+import { throwError, throwException } from '../../domain/mocks';
 
 describe('DeleteAvatarController', () => {
   let controller: DeleteAvatarController;
@@ -30,5 +31,13 @@ describe('DeleteAvatarController', () => {
     await controller.delete('any_id');
     expect(deleteSpy).toHaveBeenCalledTimes(1);
     expect(deleteAvatarSpy.userId).toBe('any_id');
+  });
+
+  it('should throw HttpException if DeleteAvatar throws', async () => {
+    jest
+      .spyOn(deleteAvatarSpy, 'deleteAvatar')
+      .mockImplementationOnce(throwError);
+    const promise = controller.delete('any_id');
+    await expect(promise).rejects.toThrow(throwException());
   });
 });
